@@ -32,6 +32,7 @@ $ npm run test:cov
 
 ## TODO
 
+- [ ] Templates
 - [ ] sqlite3
 - [ ] Auth
 - [ ] TailwindCSS
