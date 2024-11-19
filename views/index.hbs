@@ -6,6 +6,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    hi, {{ message }}
+    <div class="container mx-auto">
+      <div class="flex flex-col">
+        {{ message }}
+        <a href="/auth/login" class="text-blue-500 transition ease-in-out duration-300 hover:text-blue-400">login</a>
+      </div>
+    </div>
   </body>
 </html>
