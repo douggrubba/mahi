@@ -35,7 +35,6 @@ $ npm run test:cov
 - [ ] Templates
 - [ ] sqlite3
 - [ ] Auth
-- [ ] TailwindCSS
 
 ## Deployment
 
