@@ -9,10 +9,10 @@ import {
   Request,
   UseGuards
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { join } from 'path';
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
-import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -36,9 +36,10 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard('local'))
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+  async login(@Request() req) {
+    return req.user;
   }
 
   @UseGuards(AuthGuard)

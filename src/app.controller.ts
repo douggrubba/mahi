@@ -1,10 +1,17 @@
-import { Get, Controller, Render } from '@nestjs/common';
+import { Get, Controller, Render, UseGuards, Post, Request } from '@nestjs/common';
 import { join } from 'path';
+import { LocalAuthGuard } from './auth/local-auth.guard';
+import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import * as fs from 'fs';
 import * as Handlebars from 'handlebars';
+import { Public } from './common/decorators/public.decorator';
 
 @Controller()
 export class AppController {
+  constructor(private authService: AuthService) { }
+
+  @Public()
   @Get()
   @Render('index')
   root() {
@@ -19,5 +26,18 @@ export class AppController {
       header,
       message: 'Welcome to Mahi'
     };
+  }
+
+  @Public()
+  @UseGuards(LocalAuthGuard)
+  @Post('auth/login')
+  async login(@Request() req) {
+    return this.authService.login(req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
